@@ -18,6 +18,7 @@ namespace BolaDemo.Controllers
          };
         public record LoginRequest(string Username, string Password);
 
+        [Microsoft.AspNetCore.Authorization.AllowAnonymous] // login must stay open when FallbackPolicy is on
         [HttpPost("login")]
         public IActionResult Login(LoginRequest request)
         {

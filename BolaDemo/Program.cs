@@ -27,6 +27,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     };
 });
 builder.Services.AddAuthorization();
+builder.Services.AddSingleton<Microsoft.AspNetCore.Authorization.IAuthorizationHandler, BolaDemo.Authorization.OrderOwnerHandler>();
+// Deny by default: endpoints without [Authorize] or [AllowAnonymous] require a logged-in user
+builder.Services.Configure<Microsoft.AspNetCore.Authorization.AuthorizationOptions>(options =>
+    options.FallbackPolicy = new Microsoft.AspNetCore.Authorization.AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build());
 
 var app = builder.Build();
 
